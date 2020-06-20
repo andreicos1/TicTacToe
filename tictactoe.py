@@ -38,7 +38,7 @@ def add_symbol(window,symbol, x_coord, y_coord):
     else:
         pygame.draw.arc(window, (green),[x_coord+10,y_coord+10, 223, 223], 0, 2*math.pi, 7) #draws an arc to form an O
 
-def game_won(positions, window): #checks whether there's a win if yes, and draws a line
+def game_won(positions, window): #checks whether there's a win and draws a line if yes
     if '' != positions[0] == positions[1] == positions[2]:
         pygame.draw.line(window, (grey), [729, 121], [0,121], 7)
     elif '' != positions[3] == positions[4] == positions[5]:
