@@ -21,7 +21,7 @@ blue = 87,95,138
 green = 244, 232, 208
 grey =128,128,128
 dark_blue = 92,116,194
-
+white = 255,255,255
 
 title_font = pygame.font.SysFont('comicsans', 80)
 main_font = pygame.font.SysFont('arial', 70)
@@ -143,32 +143,32 @@ def play_again(window): #draw the box that'll appear after the game is over
     ask = pygame.draw.rect(win, (0,0,0),pygame.Rect(60,150,580,400),3) 
     win.fill((dark_blue), ask)
 
-    yes_btn = pygame.draw.rect(win, (255,255,255),pygame.Rect(90,420,220,110),3)
-    yes_text = smaller_font.render('Yes', 1, (255,255,255))
+    yes_btn = pygame.draw.rect(win, (white),pygame.Rect(90,420,220,110),3)
+    yes_text = smaller_font.render('Yes', 1, (white))
     win.blit(yes_text, (100, 430))
 
-    no_btn = pygame.draw.rect(win, (255,255,255),pygame.Rect(390,420,220,110),3)
-    no_text = smaller_font.render('No', 1, (255,255,255))
+    no_btn = pygame.draw.rect(win, (white),pygame.Rect(390,420,220,110),3)
+    no_text = smaller_font.render('No', 1, (white))
     win.blit(no_text, (400, 430))
  
     return yes_btn, no_btn #return the buttons to check whether they are pressed
 
 
 def pick_difficulty(window): #will be called in the main menu
-    Easy = pygame.draw.rect(win, (255,255,255),pygame.Rect(50,320,180,90),3)
-    Easy_text = smaller_font.render('Easy', 1, (255,255,255))
+    Easy = pygame.draw.rect(win, (white),pygame.Rect(50,320,180,90),3)
+    Easy_text = smaller_font.render('Easy', 1, (white))
     win.blit(Easy_text, (80, 330))
 
-    Normal = pygame.draw.rect(win, (255,255,255),pygame.Rect(265,320,180,90),3)
-    Normal_text = smaller_font.render('Normal', 1, (255,255,255))
+    Normal = pygame.draw.rect(win, (white),pygame.Rect(265,320,180,90),3)
+    Normal_text = smaller_font.render('Normal', 1, (white))
     win.blit(Normal_text, (275, 330))
 
-    Hard = pygame.draw.rect(win, (255,255,255),pygame.Rect(480,320,180,90),3)
-    Hard_text = smaller_font.render('Hard', 1, (255,255,255))
+    Hard = pygame.draw.rect(win, (white),pygame.Rect(480,320,180,90),3)
+    Hard_text = smaller_font.render('Hard', 1, (white))
     win.blit(Hard_text, (510, 330))
 
     End = pygame.draw.rect(win, (255,255,255),pygame.Rect(190,510,320,110),3)
-    End_text = main_font.render('Exit Game', 1, (255,255,255))
+    End_text = main_font.render('Exit Game', 1, (white))
     win.blit(End_text, (210, 525))
 
 
@@ -256,7 +256,7 @@ def menu():
         title = title_font.render('TicTacToe', 1, (dark_blue))
         win.blit(title, (230, 50))
 
-        difficulty_ask = title_font.render('Choose Difficulty: ', 1, (255,255,255))
+        difficulty_ask = title_font.render('Choose Difficulty: ', 1, (white))
         win.blit(difficulty_ask, (120, 180))
         easy, normal, hard, end = pick_difficulty(win)
 
