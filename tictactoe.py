@@ -3,7 +3,8 @@ TicTacToe game using Pygame
 Computer plays using Minimax Alpha-Beta Pruning Algorithm
 
 Andrei C. Radu
-20/06/2020
+21/06/2020
+
 
 '''
 
@@ -167,19 +168,43 @@ def pick_difficulty(window): #will be called in the main menu
     Hard_text = smaller_font.render('Hard', 1, (white))
     win.blit(Hard_text, (510, 330))
 
-    End = pygame.draw.rect(win, (255,255,255),pygame.Rect(190,510,320,110),3)
+    Back = pygame.draw.rect(win, (white),pygame.Rect(30,610,220,90),3)
+    Back_text = smaller_font.render('Go Back', 1, (white))
+    win.blit(Back_text, (40, 625))
+
+ 
+    return Easy, Normal, Hard, Back #return the buttons to check whether they are pressed
+
+
+def choose_marker(window):
+    X = pygame.draw.rect(win, (white),pygame.Rect(50,320,180,90),3)
+    X_text = smaller_font.render('X', 1, (white))
+    win.blit(X_text, (125, 330))
+
+    O = pygame.draw.rect(win, (white),pygame.Rect(265,320,180,90),3)
+    O_text = smaller_font.render('O', 1, (white))
+    win.blit(O_text, (335, 330))
+
+    Rand = pygame.draw.rect(win, (white),pygame.Rect(480,320,180,90),3)
+    Rand_text = smaller_font.render('Random', 1, (white))
+    win.blit(Rand_text, (490, 330))
+
+    End = pygame.draw.rect(win, (white),pygame.Rect(190,510,320,110),3)
     End_text = main_font.render('Exit Game', 1, (white))
     win.blit(End_text, (210, 525))
 
-
- 
-    return Easy, Normal, Hard, End #return the buttons to check whether they are pressed
+    return X, O, Rand, End
 
 
-def main(difficulty):
+def set_title(window):
+    win.fill(background_color)
+    title = title_font.render('TicTacToe', 1, (dark_blue))
+    win.blit(title, (230, 50))
+
+
+def main(difficulty, symbol): #Main game playing loop
 
     run = True
-    symbol = random.choice(['X','O']) # assign the player a random symbol
     computer_symbol = 'X' if symbol =='O' else 'O'
     player_turn = random.choice([True,False]) # randomly decide who starts
     win.fill(background_color)
@@ -215,24 +240,23 @@ def main(difficulty):
 
 
             if event.type == pygame.QUIT:
-                pygame.quit()
                 exit()
 
         #check whether someone has made a line
         a=game_won(positions, win)
         if a:
             symbol = computer_symbol if player_turn  else symbol
-            game_over = main_font.render(f'Game Over! {symbol} wins',1,(255,255,255))
+            game_over = main_font.render(f'Game Over! {symbol} wins',1,(white))
             run = False
             
         if board_full(positions) and not a: #if the board is full but no winners
-            game_over = main_font.render(f'Game Over! Draw!',1,(255,255,255))
+            game_over = main_font.render(f'Game Over! Draw!',1,(white))
             run = False
 
         
     #the end of game display
     yes ,no  = play_again(win)
-    ask_player = smaller_font.render('Would you like to play again ?', 1, (255,255,255))
+    ask_player = smaller_font.render('Would you like to play again ?', 1, (white))
     win.blit(game_over, (80, 220))
     win.blit(ask_player,(80, 340))
     pygame.display.update()
@@ -242,38 +266,61 @@ def main(difficulty):
         for event in pygame.event.get():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if yes.collidepoint(pygame.mouse.get_pos()):
-                    main(difficulty)
+                    main(difficulty, symbol)
                 elif no.collidepoint(pygame.mouse.get_pos()):
                     menu()
 
 #main menu function
 def menu():
 
-    while True:
+    choosing_marker = True
+    while choosing_marker:
         # draw the main menu
-        win.fill(background_color)
+        set_title(win)
 
-        title = title_font.render('TicTacToe', 1, (dark_blue))
-        win.blit(title, (230, 50))
+        pick_marker = title_font.render('Choose Marker: ', 1, (white))
+        win.blit(pick_marker, (120, 180))
+
+        X,O, rand, end = choose_marker(win) #the buttons to let the player choose a marker
+        pygame.display.update() #update the display
+        
+        for event in pygame.event.get(): #prompt the player to choose 
+            if event.type == pygame.QUIT:
+                exit()        
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if end.collidepoint(pygame.mouse.get_pos()):
+                    exit()
+                elif O.collidepoint(pygame.mouse.get_pos()):
+                    symbol = 'O'
+                    choosing_marker = False
+                elif X.collidepoint(pygame.mouse.get_pos()):
+                    symbol = 'X'
+                    choosing_marker = False
+                elif rand.collidepoint(pygame.mouse.get_pos()):
+                    symbol = random.choice(['X','O']) # assign the player a random symbol
+                    choosing_marker = False
+
+
+    while True:
+        set_title(win)
 
         difficulty_ask = title_font.render('Choose Difficulty: ', 1, (white))
         win.blit(difficulty_ask, (120, 180))
-        easy, normal, hard, end = pick_difficulty(win)
+        easy, normal, hard, back = pick_difficulty(win)
 
         pygame.display.update() #update the display
         for event in pygame.event.get(): #get player input
             if event.type == pygame.QUIT:
-                pygame.quit()
                 exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
-                if end.collidepoint(pygame.mouse.get_pos()):
-                    exit()
-                elif easy.collidepoint(pygame.mouse.get_pos()):
-                    main('Easy')
+                if easy.collidepoint(pygame.mouse.get_pos()):
+                    main('Easy', symbol)
                 elif normal.collidepoint(pygame.mouse.get_pos()):
-                    main('Normal')
+                    main('Normal', symbol)
                 elif hard.collidepoint(pygame.mouse.get_pos()):
-                    main('Hard')
+                    main('Hard', symbol)
+                elif back.collidepoint(pygame.mouse.get_pos()):
+                    menu()
 
 
 if __name__ == '__main__':
