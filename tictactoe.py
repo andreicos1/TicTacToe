@@ -89,7 +89,7 @@ def random_move(rectangles,computer_symbol, positions):# this makes the computer
 
 
 
-def best_move(positions, rectangles, computer_symbol,difficulty):
+def best_move(positions, rectangles, computer_symbol,difficulty): #Uses Minimax algorithm to pick a move
     bestScore = float('-inf') #we are maximising(looking for highest score), so initialize the max score as -infinity
     positions_copy = positions.copy()
     bestMove = 1
