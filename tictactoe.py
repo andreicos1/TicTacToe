@@ -21,6 +21,7 @@ background_color = 123,188,182
 blue = 87,95,138
 green = 244, 232, 208
 grey =128,128,128
+light_grey = 163, 165, 168
 dark_blue = 92,116,194
 white = 255,255,255
 
@@ -89,7 +90,7 @@ def random_move(rectangles,computer_symbol, positions):# this makes the computer
 
 
 
-def best_move(positions, rectangles, computer_symbol,difficulty): #Uses Minimax algorithm to pick a move
+def best_move(positions, rectangles, computer_symbol,difficulty):
     bestScore = float('-inf') #we are maximising(looking for highest score), so initialize the max score as -infinity
     positions_copy = positions.copy()
     bestMove = 1
@@ -146,10 +147,12 @@ def play_again(window): #draw the box that'll appear after the game is over
 
     yes_btn = pygame.draw.rect(win, (white),pygame.Rect(90,420,220,110),3)
     yes_text = smaller_font.render('Yes', 1, (white))
+    win.fill((light_grey), yes_btn)
     win.blit(yes_text, (100, 430))
 
     no_btn = pygame.draw.rect(win, (white),pygame.Rect(390,420,220,110),3)
     no_text = smaller_font.render('No', 1, (white))
+    win.fill((light_grey), no_btn)
     win.blit(no_text, (400, 430))
  
     return yes_btn, no_btn #return the buttons to check whether they are pressed
@@ -158,18 +161,22 @@ def play_again(window): #draw the box that'll appear after the game is over
 def pick_difficulty(window): #will be called in the main menu
     Easy = pygame.draw.rect(win, (white),pygame.Rect(50,320,180,90),3)
     Easy_text = smaller_font.render('Easy', 1, (white))
+    win.fill((light_grey), Easy)
     win.blit(Easy_text, (80, 330))
 
     Normal = pygame.draw.rect(win, (white),pygame.Rect(265,320,180,90),3)
     Normal_text = smaller_font.render('Normal', 1, (white))
+    win.fill((light_grey), Normal)
     win.blit(Normal_text, (275, 330))
 
     Hard = pygame.draw.rect(win, (white),pygame.Rect(480,320,180,90),3)
     Hard_text = smaller_font.render('Hard', 1, (white))
+    win.fill((light_grey), Hard)
     win.blit(Hard_text, (510, 330))
 
     Back = pygame.draw.rect(win, (white),pygame.Rect(30,610,220,90),3)
     Back_text = smaller_font.render('Go Back', 1, (white))
+    win.fill((light_grey), Back)
     win.blit(Back_text, (40, 625))
 
  
@@ -179,18 +186,22 @@ def pick_difficulty(window): #will be called in the main menu
 def choose_marker(window):
     X = pygame.draw.rect(win, (white),pygame.Rect(50,320,180,90),3)
     X_text = smaller_font.render('X', 1, (white))
+    win.fill((light_grey), X)
     win.blit(X_text, (125, 330))
 
     O = pygame.draw.rect(win, (white),pygame.Rect(265,320,180,90),3)
     O_text = smaller_font.render('O', 1, (white))
+    win.fill((light_grey), O)
     win.blit(O_text, (335, 330))
 
     Rand = pygame.draw.rect(win, (white),pygame.Rect(480,320,180,90),3)
     Rand_text = smaller_font.render('Random', 1, (white))
+    win.fill((light_grey), Rand)
     win.blit(Rand_text, (490, 330))
 
     End = pygame.draw.rect(win, (white),pygame.Rect(190,510,320,110),3)
     End_text = main_font.render('Exit Game', 1, (white))
+    win.fill((light_grey), End)
     win.blit(End_text, (210, 525))
 
     return X, O, Rand, End
@@ -256,7 +267,7 @@ def main(difficulty, symbol): #Main game playing loop
         
     #the end of game display
     yes ,no  = play_again(win)
-    ask_player = smaller_font.render('Would you like to play again ?', 1, (white))
+    ask_player = smaller_font.render('Would you like to play again?', 1, (white))
     win.blit(game_over, (80, 220))
     win.blit(ask_player,(80, 340))
     pygame.display.update()
